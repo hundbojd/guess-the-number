@@ -10,6 +10,22 @@ def fool_check_lang(n):
     return k
 
 
+def fool_check_yn(n):
+    k = n.lower()
+    while k != 'y' and k != 'n':
+        print('Please, enter the valid letter (Y - yes, N - no)')
+        k = input().lower()
+    return k
+
+
+def fool_check_dn(n):
+    k = n.lower()
+    while k != 'д' and k != 'н':
+        print('Пожалуйста, введите один из вариантов (Д - да, Н - нет)')
+        k = input().lower()
+    return k
+
+
 def fool_check_min_max_eng(n, x):
     if (n[0] == '-' and not n[1:].isdigit()) or (x[0] == '-' and not x[1:].isdigit()):
         print('Please, enter the valid numbers')
@@ -22,7 +38,7 @@ def fool_check_min_max_eng(n, x):
 
 def fool_check_min_max_rus(n, x):
     if (n[0] == '-' and not n[1:].isdigit()) or (x[0] == '-' and not x[1:].isdigit()):
-        print('Please, enter the valid numbers')
+        print('Пожалуйста, введите число')
         n, x = input(), input()
     while int(n) > int(x):
         print('Пожалуйста, введите подходящие числа, второе должно быть больше первого')
@@ -30,13 +46,18 @@ def fool_check_min_max_rus(n, x):
     return int(n), int(x)
 
 
-def is_valid(n):
+def is_valid(n, minim, maxim):
     return n == int(n) and minim <= n <= maxim
 
 
-def eng_ver(my_num, num):
+def eng_ver():
+    print('I need two numbers. They will be the minimum and maximum number of your range')
+    minim, maxim = fool_check_min_max_eng(input(), input())
+    num = random.randint(minim, maxim)
+    print('I\'ve chosen the number\nEnter your guess:')
+    my_num = int(input())
     while my_num != num:
-        if is_valid(my_num) == False:
+        if is_valid(my_num, minim, maxim) == False:
             print(f'Maybe you shoud try an integer in the range from {minim} to {maxim}?')
         else:
             if my_num < num:
@@ -46,9 +67,14 @@ def eng_ver(my_num, num):
         my_num = int(input())
 
 
-def rus_ver(my_num, num):
+def rus_ver():
+    print('Мне понадобятся два числа. Это будет минимальное и максимальное количество в вашем диапазоне')
+    minim, maxim = fool_check_min_max_rus(input(), input())
+    num = random.randint(minim, maxim)
+    print('Я выбрал число\nВведите свое предположение:')
+    my_num = int(input())
     while my_num != num:
-        if is_valid(my_num) == False:
+        if is_valid(my_num, minim, maxim) == False:
             print(f'А может быть все-таки введем целое число в диапазоне от {minim} до {maxim}?')
         else:
             if my_num < num:
@@ -64,20 +90,28 @@ print('First of all, choose your language: en / ru', '\n',
 lang = fool_check_lang(input())
 
 if lang == 'en' or lang == 'анг':
-    print('I need two numbers. They will be the minimum and maximum number of your range')
-    minim, maxim = fool_check_min_max_eng(input(), input())
-    num = random.randint(minim, maxim+1)
-    print('I\'ve chosen the number\nEnter your guess:')
-    my_num = int(input())
-    eng_ver(my_num, num)
+    eng_ver()
     print('Congratulations, you\'ve guessed the number!')
-    print('Thank you for playing this Guess the number game. See you...')
+    while True:
+        print('Do you want to play again? Y / N')
+        answer = fool_check_yn(input())
+        if answer == 'y':
+            print('Okay, let\'s play again!')
+            eng_ver()
+            print('Congratulations, you\'ve guessed the number!')
+        else:
+            break
+    print('Thank you for playing this Guess the number game. See you next time!')
 else:
-    print('Мне понадобятся два числа. Это будет минимальное и максимальное количество в вашем диапазоне')
-    minim, maxim = fool_check_min_max_rus(input(), input())
-    num = random.randint(minim, maxim+1)
-    print('Я выбрал число\nВведите свое предположение:')
-    my_num = int(input())
-    rus_ver(my_num, num)
+    rus_ver()
     print('Вы угадали, поздравляем!')
-    print('Спасибо, что играли в числовую угадайку. Еще увидимся...')
+    while True:
+        print('Хотите сыграть еще раз? Д/Н')
+        answer = fool_check_dn(input())
+        if answer == 'д':
+            print('Хорошо, давайте сыграем еще раз!')
+            rus_ver()
+            print('Вы угадали, поздравляем!')
+        else:
+            break
+    print('Спасибо, что играли в числовую угадайку. Увидимся в следующий раз!')
