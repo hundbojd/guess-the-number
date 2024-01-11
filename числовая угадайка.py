@@ -11,6 +11,9 @@ def fool_check_lang(n):
 
 
 def fool_check_min_max_eng(n, x):
+    if (n[0] == '-' and not n[1:].isdigit()) or (x[0] == '-' and not x[1:].isdigit()):
+        print('Please, enter the valid numbers')
+        n, x = input(), input()
     while int(n) > int(x):
         print('Please, enter the valid numbers, the second one needs to be bigger than the first one')
         n, x = input(), input()
@@ -18,6 +21,9 @@ def fool_check_min_max_eng(n, x):
 
 
 def fool_check_min_max_rus(n, x):
+    if (n[0] == '-' and not n[1:].isdigit()) or (x[0] == '-' and not x[1:].isdigit()):
+        print('Please, enter the valid numbers')
+        n, x = input(), input()
     while int(n) > int(x):
         print('Пожалуйста, введите подходящие числа, второе должно быть больше первого')
         n, x = input(), input()
